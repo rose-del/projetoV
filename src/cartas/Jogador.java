@@ -27,18 +27,22 @@ public class Jogador {
         return orgaos;
     }
 
+    //adiciona uma carta à mão do jogador.
     public void adicionarCarta(Carta carta) {
         mao.add(carta);
     }
 
+    //remove uma carta da mão do jogador.
     public void descartarCarta(Carta carta) {
         mao.remove(carta);
     }
 
+    //adiciona um órgão ao corpo do jogador.
     public void adicionarOrgao(Orgao orgao) {
         orgaos.add(orgao);
     }
 
+    //remove um órgão.
     public void removerOrgao(Orgao orgao) {
         orgaos.remove(orgao);
     }

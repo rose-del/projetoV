@@ -11,6 +11,12 @@ public abstract class Carta {
         return nome;
     }
 
+    /**
+     * Define um metodo abstrato jogar(),
+     * que será implementado nas subclasses.
+     * @param jogador
+     * @param alvo
+     */
     public abstract void jogar(Jogador jogador, Jogador alvo);
 }
 

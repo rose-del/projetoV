@@ -18,14 +18,17 @@ public class Orgao extends Carta {
         return infectado;
     }
 
+    //marca o órgão como infectado.
     public void infectar() {
         this.infectado = true;
     }
 
+    //remove a infecção.
     public void curar() {
         this.infectado = false;
     }
 
+    //adiciona o órgão ao jogador que jogou a carta.?
     @Override
     public void jogar(Jogador jogador, Jogador alvo) {
         jogador.adicionarOrgao(this);

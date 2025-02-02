@@ -1,16 +1,30 @@
+
 .tela-principal {
     -fx-background-color: #68D200;
 }
 
+.jogador-da-vez {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #1B9E78;
+    -fx-padding: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #DEDBFB;
+    -fx-border-width: 1px;
+    -fx-margin-top: 100px;
+}
+
+
 .botao {
     -fx-font-size: 16px;
     -fx-background-color: #DEDBFB;
-    -fx-text-fill: #333;
-    -fx-padding: 10 20;
-    -fx-border-radius: 5;
+    -fx-text-fill: #10053D;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 10px;
     -fx-background-radius: 5;
 }
 
 .botao:hover {
-    -fx-background-color: #8F85F9;
+    -fx-background-color: #1B9E78;
 }

@@ -12,6 +12,12 @@ public class Virus extends Carta {
         return cor;
     }
 
+    /**
+     * O metodo jogar() percorre os órgãos do jogador alvo e,
+     * se encontrar um órgão com a mesma cor do vírus, o infecta.
+     * @param jogador
+     * @param alvo
+     */
     @Override
     public void jogar(Jogador jogador, Jogador alvo) {
         for (Orgao orgao : alvo.getOrgaos()) {
