@@ -1,29 +1,23 @@
 public class Carta {
+    enum Tipo { CORACAO, OSSO, ESTOMAGO, CEREBRO, VIRUS, REMEDIO, UNIVERSAL }
+    enum Cor { VERMELHO, AMARELO, VERDE, AZUL, UNIVERSAL }
 
-    public enum Cor {
-        VERMELHO, AZUL, VERDE, AMARELO, UNIVERSAL
-    }
-
-    public enum Tipo {
-        ÓRGÃO, VÍRUS, REMÉDIO
-    }
-
-    private Cor cor;
     private Tipo tipo;
+    private Cor cor;
     private boolean especial;
 
-    public Carta(Cor cor, Tipo tipo, boolean especial) {
-        this.cor = cor;
+    public Carta(Tipo tipo, Cor cor) {
         this.tipo = tipo;
-        this.especial = especial;
-    }
-
-    public Cor getCor() {
-        return cor;
+        this.cor = cor;
+        this.especial = (tipo == Tipo.UNIVERSAL && cor == Cor.UNIVERSAL);
     }
 
     public Tipo getTipo() {
         return tipo;
+    }
+
+    public Cor getCor() {
+        return cor;
     }
 
     public boolean isEspecial() {
@@ -32,21 +26,6 @@ public class Carta {
 
     @Override
     public String toString() {
-        String nome = "";
-
-        switch (tipo) {
-            case ÓRGÃO:
-                nome = (especial ? "Órgão Universal" : "Órgão " + cor);
-                break;
-
-            case VÍRUS:
-                nome = (especial ? "Vírus Universal" : "Vírus " + cor);
-                break;
-
-            case REMÉDIO:
-                nome = (especial ? "Remédio Universal" : "Remédio " + cor);
-        }
-
-        return nome;
+        return (especial ? "ESPECIAL - " : tipo + " - ") + cor;
     }
 }
