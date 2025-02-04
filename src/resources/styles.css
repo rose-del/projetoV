@@ -1,6 +1,11 @@
 
 .tela-principal {
+    -fx-background-image: url("./image/fundoMesa.png");
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
     -fx-background-color: #68D200;
+
 }
 
 .jogador-da-vez {
@@ -13,6 +18,16 @@
     -fx-border-color: #DEDBFB;
     -fx-border-width: 1px;
     -fx-margin-top: 100px;
+}
+
+.jogador-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+    /**-fx-background-color: rgba(0, 0, 0, 0.5);**/
+    -fx-padding: 15px;
+    /**-fx-border-radius: 5px;*/
+    /*-fx-background-radius: 5px;*/
+    /*-fx-margin-top: 10px;*/
 }
 
 

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -35,7 +36,7 @@ public class TelaEscolha extends Application {
     public void start(Stage primaryStage) {
         inicializarJogadores();
 
-        Button btnAtacar = new Button("Atacar/Defender");
+        Button btnAtacar = new Button("Atacar");
         Button btnDescartar = new Button("Descartar");
         Button btnMontar = new Button("Montar Corpo");
 
@@ -46,21 +47,36 @@ public class TelaEscolha extends Application {
 
         HBox botoes = new HBox(20, btnAtacar, btnDescartar, btnMontar);
         botoes.setAlignment(Pos.TOP_CENTER); // Alinha os botões no topo e ao centro.
-        botoes.setPadding(new Insets(20, 0, 0, 0)); // Adiciona um espaçamento no topo
+        botoes.setPadding(new Insets(20, 10, 20, 10)); // Adiciona um espaçamento no topo
 
-        // Cria e retorna um VBox que exibe os nomes dos jogadores e seus órgãos associados.
-        VBox exibicaoJogadores = exibirJogadores();
-        exibicaoJogadores.setPadding(new Insets(20));
+        HBox.setHgrow(btnAtacar, javafx.scene.layout.Priority.ALWAYS);
+        HBox.setHgrow(btnDescartar, javafx.scene.layout.Priority.ALWAYS);
+        HBox.setHgrow(btnMontar, javafx.scene.layout.Priority.ALWAYS);
+
+        btnAtacar.setMaxWidth(Double.MAX_VALUE);
+        btnDescartar.setMaxWidth(Double.MAX_VALUE);
+        btnMontar.setMaxWidth(Double.MAX_VALUE);
 
         // Layout principal
-        root = new VBox(20, botoes, exibicaoJogadores);
+        root = new VBox(20, botoes);
         root.setAlignment(Pos.TOP_CENTER);
         root.getStyleClass().add("tela-principal"); // Aplica uma classe CSS.
+
+        // Cria e retorna um VBox que exibe os nomes dos jogadores e seus órgãos associados.
+        GridPane exibicaoJogadores = exibirJogadores();
+        //exibicaoJogadores.getStyleClass().add("jogador-label");
+        root.getChildren().add(exibicaoJogadores);
 
         btnAtacar.setOnAction(e -> abrirMenuAtaque());
 
         // Configuração da cena principal do jogo com 800x600 px.
         Scene scene = new Scene(root, 800, 600);
+        scene.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            root.setPrefWidth(newWidth.doubleValue());
+        });
+        scene.heightProperty().addListener((obs, oldHeigth, newHeight) -> {
+            root.setPrefHeight(newHeight.doubleValue());
+        });
         scene.getStylesheets().add(getClass().getResource("../resources/styles.css").toExternalForm());
 
         Label jogadorDaVez = new Label("É a sua vez de jogar " + jogadorAtual.getNome() + "\n       Escolha a sua ação.");
@@ -98,10 +114,26 @@ public class TelaEscolha extends Application {
         jogadorAtual = jogadores.get(0);
     }
 
-    private VBox exibirJogadores() {
-        VBox vbox = new VBox(40);
-        //Percorre a lista de jogadores e monta uma string contendo informações sobre os órgãos de cada jogador
+    private GridPane exibirJogadores() {
+        GridPane vbox = new GridPane();
+        vbox.setPadding(new Insets(10));
+        vbox.setHgap(20);
+        vbox.setVgap(20);
+        vbox.setAlignment(Pos.CENTER);
+
+        int coluna = 0;
+        int linha = 0;
+        int maxColunas = 2;
+
         for (Jogador jogador : jogadores) {
+            VBox jogadorBox = new VBox(5);
+            jogadorBox.setAlignment(Pos.CENTER);
+            jogadorBox.setStyle("-fx-border-color: black; -fx-padding: 10px;");
+
+
+            Label nomeJogador = new Label(jogador.getNome());
+            nomeJogador.getStyleClass().add("jogador-label"); // Classe CSS para estilização
+
             //StringBuilder é para construir dinamicamente a string com as informações dos órgãos de cada jogador
             StringBuilder infoOrgaos = new StringBuilder();
             for (Orgao orgao : jogador.getOrgaos()) {
@@ -110,8 +142,18 @@ public class TelaEscolha extends Application {
                         .append(orgao.isInfectado() ? "Infectado" : "Saudável")
                         .append("), ");
             }
-            Text textoJogador = new Text(jogador.getNome() + ": " + infoOrgaos.toString());
-            vbox.getChildren().add(textoJogador);
+            Text textoJogador = new Text(infoOrgaos.toString());
+
+
+            jogadorBox.getChildren().addAll(nomeJogador, textoJogador);
+            vbox.add(jogadorBox, coluna, linha);
+
+            // Ajusta a disposição para múltiplas colunas
+            coluna++;
+            if (coluna >= maxColunas) {
+                coluna = 0;
+                linha++;
+            }
         }
         return vbox;
     }
@@ -189,7 +231,7 @@ public class TelaEscolha extends Application {
 
     private void atualizarInterfaceJogadores() {
         // Atualiza a exibição dos jogadores e seus órgãos após a infecção
-        VBox exibicaoJogadores = exibirJogadores();
+        GridPane exibicaoJogadores = exibirJogadores();
         root.getChildren().set(1, exibicaoJogadores);  // Atualiza a exibição dos jogadores na interface
     }
 
