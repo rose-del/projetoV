@@ -1,0 +1,53 @@
+/*Estilo do cabeçalho */
+.header{
+     -fx-background-color:#66cc00;
+     -fx-padding:10px
+}
+.title{
+    -fx-font-size:20px;
+    -fx-font-weight:bold;
+    -fx-text-fill:black;
+
+}
+
+/* Cor de fundo da barra superior */
+.root {
+    -fx-background-color: white;
+}
+
+/* Estiliza o título "BEM-VINDOS" */
+.label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-padding: 20px;
+}
+
+/* Caixa cinza onde ficam os campos de IP e Porta */
+.login-box {
+    -fx-background-color: #D3D3D3;
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-alignment: center;
+}
+
+/* Caixa lateral com botões */
+.side-menu {
+    -fx-padding: 20px;
+}
+
+/* Estilização dos botões laterais */
+.button {
+    -fx-background-color: #C0C0C0;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-min-width: 120px;
+}
+
+/* Estilização do botão "PRÓXIMO" */
+.button:last-child {
+    -fx-background-color: #2C9E80;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
