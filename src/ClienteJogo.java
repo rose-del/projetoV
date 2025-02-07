@@ -20,7 +20,7 @@ public class ClienteJogo {
                 try {
                     String mensagem;
                     while ((mensagem = entrada.readLine()) != null) {
-                        System.out.println("Servidor: " + mensagem);
+                        System.out.println(mensagem);
 
                         // Se receber a mensagem de remoção, encerrar o cliente
                         if (mensagem.equals("VOCÊ FOI REMOVIDO DO JOGO.")) {
