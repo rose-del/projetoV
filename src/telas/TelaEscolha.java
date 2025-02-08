@@ -17,6 +17,11 @@ import cartas.Jogador;
 import cartas.Orgao;
 import cartas.Virus;
 
+import servidorJogo.Jogo;
+import servidorJogo.Carta;
+import servidorJogo.ClienteJogo;
+import servidorJogo.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -254,7 +259,6 @@ public class TelaEscolha extends Application {
             root.getChildren().add(jogadorDaVez);// Adiciona o texto caso não exista ainda
         }
     }
-
 
     public static void main(String[] args) {
         launch(args);

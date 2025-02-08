@@ -24,6 +24,7 @@ public class ServidorJogo {
             jogo = new Jogo();
             System.out.println("Servidor iniciado na porta " + PORTA);
             System.out.println("Aguardando jogadores... (Mínimo: " + MIN_JOGADORES + ", Máximo: " + MAX_JOGADORES + ")");
+            enviarMensagem("Aguardando jogadores... (Mínimo: " + MIN_JOGADORES + ", Máximo: " + MAX_JOGADORES + ")");
 
             while (jogadores.size() < MAX_JOGADORES) {
                 Socket jogador = servidor.accept();
@@ -38,6 +39,7 @@ public class ServidorJogo {
                 jogo.adicionarJogador(jogador);
                 respostasJogadores.put(jogador, "");
                 System.out.println("Jogador " + id + " conectado!");
+                enviarMensagem("Jogador " + id + " conectado!");
                 new Thread(new GerenciadorJogador(jogador, id)).start();
 
                 if (jogadores.size() == MIN_JOGADORES) {
@@ -56,21 +58,21 @@ public class ServidorJogo {
     }
 
     private static void iniciarContagemTempo() {
-        System.out.println("Mínimo de jogadores atingido! Esperando até 1 minuto por mais conexões...");
+        enviarMensagem("Mínimo de jogadores atingido! Esperando até 1 minuto por mais conexões...");
         scheduler.schedule(() -> {
             tempoExpirado = true;
             if (jogadores.size() >= MIN_JOGADORES) {
-                System.out.println("Tempo esgotado! Iniciando votação para começar o jogo.");
+                enviarMensagem("Tempo esgotado! Iniciando votação para começar o jogo.");
                 perguntarInicioJogo();
             } else {
-                System.out.println("Tempo esgotado! Jogadores insuficientes. Encerrando servidor.");
+                enviarMensagem("Tempo esgotado! Jogadores insuficientes. Encerrando servidor.");
                 jogo.encerrarJogo();
             }
         }, TEMPO_ESPERA_MS, TimeUnit.MILLISECONDS);
     }
 
     private static void perguntarInicioJogo() {
-        System.out.println("Perguntando aos jogadores se querem iniciar o jogo...");
+        enviarMensagem("Perguntando aos jogadores se querem iniciar o jogo...");
         for (Socket jogador : new ArrayList<>(jogadores)) {
             try {
                 PrintWriter saida = new PrintWriter(jogador.getOutputStream(), true);
@@ -86,12 +88,24 @@ public class ServidorJogo {
         verificarRespostas();
     }
 
+    // Metodo para enviar as respostas do servidor para a interface do usuário
+    public static void enviarMensagem(String mensagem) {
+        for (Socket jogador : jogadores) {
+            try {
+                PrintWriter saida = new PrintWriter(jogador.getOutputStream(), true);
+                saida.println(mensagem);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private static void verificarRespostas() {
         List<Socket> jogadoresRemovidos = new ArrayList<>();
 
         for (Socket jogador : new ArrayList<>(jogadores)) {
             if ("N".equalsIgnoreCase(respostasJogadores.get(jogador))) {
-                System.out.println("Jogador recusou jogar e será removido: " + jogador);
+                enviarMensagem("Jogador recusou jogar e será removido: " + jogador);
                 jogadoresRemovidos.add(jogador);
                 try {
                     jogador.close();
@@ -106,13 +120,12 @@ public class ServidorJogo {
         jogo.removerJogadores(jogadoresRemovidos);
 
         if (jogadores.size() < MIN_JOGADORES) {
-            System.out.println("Jogadores insuficientes após recusas. Encerrando servidor.");
+            enviarMensagem("Jogadores insuficientes após recusas. Encerrando servidor.");
             jogo.encerrarJogo();
             return;
         }
-
         if (!respostasJogadores.containsValue("")) {
-            System.out.println("Todos aceitaram iniciar o jogo! Começando...");
+            enviarMensagem("Todos aceitaram iniciar o jogo! Começando...");
             jogo.iniciarJogo();
         }
     }

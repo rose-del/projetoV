@@ -8,6 +8,27 @@
 
 }
 
+.tela-iniciaJogo {
+    -fx-background-image: url("./image/fundo.png");
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: #68D200;
+    -fx-alignment: center;
+}
+
+.pergunta-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #146B3A;
+    -fx-padding: 15px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #DEDBFB;
+    -fx-border-width: 2px;
+}
+
 .jogador-da-vez {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -22,14 +43,11 @@
 
 .jogador-label {
     -fx-font-size: 16px;
-    -fx-text-fill: white;
-    /**-fx-background-color: rgba(0, 0, 0, 0.5);**/
+    -fx-text-fill: #FFFFFF;
     -fx-padding: 15px;
-    /**-fx-border-radius: 5px;*/
-    /*-fx-background-radius: 5px;*/
-    /*-fx-margin-top: 10px;*/
+    -fx-effect: dropshadow(gaussian, black, 3, 0.7, 0, 0),
+                dropshadow(gaussian, black, 3, 0.7, 0, 0);
 }
-
 
 .botao {
     -fx-font-size: 16px;
